@@ -1,5 +1,25 @@
 const generateBtn = document.getElementById('generate-btn');
 const numberDivs = document.querySelectorAll('.number');
+const themeToggleBtn = document.getElementById('theme-toggle');
+const body = document.body;
+
+// Theme switching
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    body.setAttribute('data-theme', savedTheme);
+}
+
+themeToggleBtn.addEventListener('click', () => {
+    let currentTheme = body.getAttribute('data-theme');
+    if (currentTheme === 'dark') {
+        body.removeAttribute('data-theme');
+        localStorage.removeItem('theme');
+    } else {
+        body.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    }
+});
+
 
 function generateLottoNumbers() {
     const numbers = new Set();
