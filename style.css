@@ -39,11 +39,16 @@ body {
 }
 
 #menu-display {
-    min-height: 50px;
+    height: 450px;
     margin-bottom: 20px;
     border: 1px solid var(--border-color);
     padding: 20px;
     transition: all 0.3s;
+}
+
+#menu-image {
+    height: 300px;
+    object-fit: cover;
 }
 
 #menu-name {
