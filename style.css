@@ -68,3 +68,59 @@ body {
     color: var(--text-color);
     border: 1px solid var(--border-color);
 }
+
+/* Contact Form Styles */
+#contact-form-section {
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--button-bg-color);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#contact-form-section h2 {
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+#contact-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-color);
+    text-align: left;
+}
+
+#contact-form input[type="text"],
+#contact-form input[type="email"],
+#contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+#contact-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+#contact-form button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--text-color);
+    color: var(--background-color);
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+#contact-form button[type="submit"]:hover {
+    background-color: var(--border-color);
+}

@@ -16,6 +16,22 @@
             <p id="menu-name"></p>
         </div>
         <button id="recommend-btn">메뉴 추천</button>
+
+        <section id="contact-form-section">
+            <h2>제휴 문의</h2>
+            <form action="https://formspree.io/f/xqedbzkd" method="POST" id="contact-form">
+                <label for="name">이름:</label>
+                <input type="text" name="name" id="name" required>
+                
+                <label for="email">이메일:</label>
+                <input type="email" name="email" id="email" required>
+                
+                <label for="message">메시지:</label>
+                <textarea name="message" id="message" required></textarea>
+                
+                <button type="submit">문의 보내기</button>
+            </form>
+        </section>
     </div>
     <script src="main.js"></script>
 </body>
