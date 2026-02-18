@@ -49,12 +49,17 @@ async function recommendDinner() {
     menuImage.src = 'https://via.placeholder.com/400x300.png?text=Loading...'; // Placeholder
 
     try {
-        const response = await fetch(recommendedMenu.apiEndpoint);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+        // First, fetch the external image URL from the Foodish API
+        const apiResponse = await fetch(recommendedMenu.apiEndpoint);
+        if (!apiResponse.ok) {
+            throw new Error(`Foodish API error! status: ${apiResponse.status}`);
         }
-        const data = await response.json();
-        menuImage.src = data.image;
+        const apiData = await apiResponse.json();
+        const externalImageUrl = apiData.image;
+
+        // Then, set the image src to our proxy, which will fetch the actual image data
+        menuImage.src = `/image?url=${encodeURIComponent(externalImageUrl)}`;
+
     } catch (error) {
         console.error('Error fetching image:', error);
         menuImage.src = 'https://via.placeholder.com/400x300.png?text=Image+Load+Failed'; // Error placeholder
