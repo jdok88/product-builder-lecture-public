@@ -114,20 +114,14 @@ main .subtitle {
     margin-bottom: 2rem;
     border: 1px solid var(--border-color);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-#menu-image {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
+    min-height: 100px; /* Give it some min-height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #menu-name {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 700;
     margin-top: 0;
 }
