@@ -18,6 +18,11 @@ const dinnerMenus = [
     { name: "파스타", apiEndpoint: "https://foodish-api.com/api/images/pasta", recipe: "1. 끓는 물에 소금을 넣고 파스타 면을 삶습니다. 2. 팬에 올리브 오일을 두르고 마늘, 원하는 재료를 볶습니다. 3. 면과 소스를 넣고 함께 볶아줍니다." }
 ];
 
+// Image error handling
+menuImage.onerror = function() {
+    this.src = 'https://via.placeholder.com/400x300.png?text=Image+Not+Found';
+};
+
 // Theme switching
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme) {
@@ -41,15 +46,18 @@ async function recommendDinner() {
     
     menuName.textContent = recommendedMenu.name;
     menuRecipe.textContent = recommendedMenu.recipe;
-    menuImage.src = 'https://placehold.co/400x300?text=Image+Loading...'; // Placeholder
+    menuImage.src = 'https://via.placeholder.com/400x300.png?text=Loading...'; // Placeholder
 
     try {
         const response = await fetch(recommendedMenu.apiEndpoint);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         menuImage.src = data.image;
     } catch (error) {
         console.error('Error fetching image:', error);
-        menuImage.src = 'https://placehold.co/400x300?text=Error'; // Error placeholder
+        menuImage.src = 'https://via.placeholder.com/400x300.png?text=Image+Load+Failed'; // Error placeholder
     }
 }
 
