@@ -51,10 +51,10 @@ async function recommendDinner() {
     try {
         let externalImageUrl;
         if (recommendedMenu.imageUrl) {
-            // Use the static URL directly
+            // Use the static URL
             externalImageUrl = recommendedMenu.imageUrl;
         } else if (recommendedMenu.apiEndpoint) {
-            // Fetch the external image URL from the Foodish API
+            // Fetch the external image URL from the Foodish API first
             const apiResponse = await fetch(recommendedMenu.apiEndpoint);
             if (!apiResponse.ok) {
                 throw new Error(`Foodish API error! status: ${apiResponse.status}`);
@@ -65,11 +65,16 @@ async function recommendDinner() {
             throw new Error('No image source found for this menu item.');
         }
 
-        // Set the image src to our proxy, which will fetch the actual image data
-        menuImage.src = `/image?url=${encodeURIComponent(externalImageUrl)}`;
+        // Fetch the image as a Data URL from our proxy function
+        const proxyResponse = await fetch(`/image?url=${encodeURIComponent(externalImageUrl)}`);
+        if (!proxyResponse.ok) {
+            throw new Error(`Image proxy error! status: ${proxyResponse.status}`);
+        }
+        const proxyData = await proxyResponse.json();
+        menuImage.src = proxyData.dataUrl;
 
     } catch (error) {
-        console.error('Error fetching image:', error);
+        console.error('Error in recommendDinner:', error);
         menuImage.src = 'https://via.placeholder.com/400x300.png?text=Image+Load+Failed'; // Error placeholder
     }
 }

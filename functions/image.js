@@ -11,20 +11,28 @@ export async function onRequest(context) {
   try {
     const imageResponse = await fetch(imageUrl, {
       headers: {
-        // Pretend to be a browser to avoid getting blocked
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
       }
     });
 
     if (!imageResponse.ok) {
-        return new Response('Failed to fetch image', { status: imageResponse.status });
+      return new Response(`Failed to fetch image. Status: ${imageResponse.status}`, { status: imageResponse.status });
     }
 
-    const response = new Response(imageResponse.body, imageResponse);
-    // Set CORS headers to allow the browser to display the image
-    response.headers.set('Access-Control-Allow-Origin', '*');
+    const contentType = imageResponse.headers.get('content-type');
+    const buffer = await imageResponse.arrayBuffer();
+    const base64String = btoa(String.fromCharCode(...new Uint8Array(buffer)));
     
-    return response;
+    const dataUrl = `data:${contentType};base64,${base64String}`;
+
+    const jsonResponse = new Response(JSON.stringify({ dataUrl }), {
+      headers: { 
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+    });
+    
+    return jsonResponse;
 
   } catch (error) {
     return new Response('Error fetching image: ' + error.message, { status: 500 });
